@@ -1,0 +1,9 @@
+CentroCustoID;CentroCustoNome;TipoCentro
+1;Produção;Variavel
+2;Logística;Variavel
+3;Marketing;Fixo
+4;RH;Fixo
+5;TI;Fixo
+6;Financeiro;Fixo
+7;P&D;Fixo
+8;Comercial;Variavel
