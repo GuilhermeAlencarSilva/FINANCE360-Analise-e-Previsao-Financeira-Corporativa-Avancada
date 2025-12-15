@@ -152,29 +152,29 @@ Comparação entre valores reais e previstos
 Todas as medidas abaixo foram desenvolvidas considerando modelo estrela, direção single, e uso da tabela Fato_Financeiro como fato principal.
 
 1️⃣ Receita Total
-Receita Total :=
+Receita Total =
 SUM ( Fato_Financeiro[Receita] )
 
 2️⃣ Custo Total
-Custo Total :=
+Custo Total =
 SUM ( Fato_Financeiro[Custo] )
 
 3️⃣ Lucro Líquido
-Lucro Líquido :=
+Lucro Líquido =
 [Receita Total] - [Custo Total]
 
 4️⃣ EBITDA
 
 EBITDA = Receita − Custos Operacionais (sem impostos, juros e depreciação)
 
-EBITDA :=
+EBITDA =
 CALCULATE (
     [Receita Total] - [Custo Total],
     Fato_Financeiro[Tipo_Custo] <> "Depreciação"
 )
 
 5️⃣ Margem (%)
-Margem (%) :=
+Margem (%) =
 DIVIDE (
     [Lucro Líquido],
     [Receita Total],
@@ -185,14 +185,14 @@ DIVIDE (
 
 Quanto de caixa é consumido por período
 
-Burn Rate :=
+Burn Rate =
 CALCULATE (
     SUM ( Fato_Caixa[CaixaValor] ),
     Fato_Caixa[Tipo_Movimento] = "Saída"
 )
 
 7️⃣ CAC — Custo de Aquisição de Cliente
-CAC :=
+CAC =
 DIVIDE (
     CALCULATE (
         SUM ( Fato_Despesas[Valor_Despesa] ),
@@ -203,7 +203,7 @@ DIVIDE (
 )
 
 8️⃣ LTV — Lifetime Value
-LTV :=
+LTV =
 AVERAGEX (
     VALUES ( Dim_Cliente[ClienteID] ),
     CALCULATE ( [Receita Total] )
@@ -213,7 +213,7 @@ AVERAGEX (
 
 Forecast linear simples baseado em tendência histórica
 
-Receita Prevista :=
+Receita Prevista =
 VAR UltimaData =
     MAX ( Dim_Tempo[Data] )
 
@@ -235,7 +235,7 @@ IF (
 Este forecast simula o uso comum em FP&A corporativo, não um modelo estatístico avançado.
 
 🔟 Custo Previsto
-Custo Previsto :=
+Custo Previsto =
 VAR CustoMedioMensal =
     AVERAGEX (
         VALUES ( Dim_Tempo[AnoMes] ),
@@ -246,11 +246,11 @@ RETURN
 CustoMedioMensal
 
 1️⃣1️⃣ Variância Absoluta
-Variância Absoluta :=
+Variância Absoluta =
 [Receita Total] - [Receita Prevista]
 
 1️⃣2️⃣ Variância %
-Variância % :=
+Variância % =
 DIVIDE (
     [Variância Absoluta],
     [Receita Prevista],
@@ -258,14 +258,14 @@ DIVIDE (
 )
 
 1️⃣3️⃣ Receita YoY
-Receita YoY :=
+Receita YoY =
 CALCULATE (
     [Receita Total],
     SAMEPERIODLASTYEAR ( Dim_Tempo[Data] )
 )
 
 1️⃣4️⃣ Receita MoM
-Receita MoM :=
+Receita MoM =
 CALCULATE (
     [Receita Total],
     DATEADD ( Dim_Tempo[Data], -1, MONTH )
@@ -273,7 +273,7 @@ CALCULATE (
 
 📊 Medidas Auxiliares (Usadas em Gráficos Avançados)
 Receita Acumulada (para Curva ABC)
-Receita Acumulada :=
+Receita Acumulada =
 CALCULATE (
     [Receita Total],
     FILTER (
@@ -284,14 +284,14 @@ CALCULATE (
 )
 
 % Acumulado (Curva ABC)
-% Receita Acumulada :=
+% Receita Acumulada =
 DIVIDE (
     [Receita Acumulada],
     CALCULATE ( [Receita Total], ALL ( Dim_Produto ) )
 )
 
 Classificação ABC
-Classificação ABC :=
+Classificação ABC =
 SWITCH (
     TRUE (),
     [% Receita Acumulada] <= 0.8, "A",
