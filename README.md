@@ -147,6 +147,158 @@ Comparação entre valores reais e previstos
 📌 O forecast foi desenhado para análise gerencial, não para modelos estatísticos complexos, simulando o uso comum em áreas financeiras corporativas.
 
 
+📐 DAX — Medidas Financeiras do Projeto FINANCE360
+
+Todas as medidas abaixo foram desenvolvidas considerando modelo estrela, direção single, e uso da tabela Fato_Financeiro como fato principal.
+
+1️⃣ Receita Total
+Receita Total :=
+SUM ( Fato_Financeiro[Receita] )
+
+2️⃣ Custo Total
+Custo Total :=
+SUM ( Fato_Financeiro[Custo] )
+
+3️⃣ Lucro Líquido
+Lucro Líquido :=
+[Receita Total] - [Custo Total]
+
+4️⃣ EBITDA
+
+EBITDA = Receita − Custos Operacionais (sem impostos, juros e depreciação)
+
+EBITDA :=
+CALCULATE (
+    [Receita Total] - [Custo Total],
+    Fato_Financeiro[Tipo_Custo] <> "Depreciação"
+)
+
+5️⃣ Margem (%)
+Margem (%) :=
+DIVIDE (
+    [Lucro Líquido],
+    [Receita Total],
+    0
+)
+
+6️⃣ Burn Rate
+
+Quanto de caixa é consumido por período
+
+Burn Rate :=
+CALCULATE (
+    SUM ( Fato_Caixa[CaixaValor] ),
+    Fato_Caixa[Tipo_Movimento] = "Saída"
+)
+
+7️⃣ CAC — Custo de Aquisição de Cliente
+CAC :=
+DIVIDE (
+    CALCULATE (
+        SUM ( Fato_Despesas[Valor_Despesa] ),
+        Fato_Despesas[Tipo_Despesa] = "Marketing"
+    ),
+    DISTINCTCOUNT ( Dim_Cliente[ClienteID] ),
+    0
+)
+
+8️⃣ LTV — Lifetime Value
+LTV :=
+AVERAGEX (
+    VALUES ( Dim_Cliente[ClienteID] ),
+    CALCULATE ( [Receita Total] )
+)
+
+9️⃣ Receita Prevista (Forecast em DAX)
+
+Forecast linear simples baseado em tendência histórica
+
+Receita Prevista :=
+VAR UltimaData =
+    MAX ( Dim_Tempo[Data] )
+
+VAR ReceitaMediaMensal =
+    AVERAGEX (
+        VALUES ( Dim_Tempo[AnoMes] ),
+        [Receita Total]
+    )
+
+RETURN
+IF (
+    MAX ( Dim_Tempo[Data] ) > UltimaData,
+    ReceitaMediaMensal,
+    [Receita Total]
+)
+
+
+📌 Observação:
+Este forecast simula o uso comum em FP&A corporativo, não um modelo estatístico avançado.
+
+🔟 Custo Previsto
+Custo Previsto :=
+VAR CustoMedioMensal =
+    AVERAGEX (
+        VALUES ( Dim_Tempo[AnoMes] ),
+        [Custo Total]
+    )
+
+RETURN
+CustoMedioMensal
+
+1️⃣1️⃣ Variância Absoluta
+Variância Absoluta :=
+[Receita Total] - [Receita Prevista]
+
+1️⃣2️⃣ Variância %
+Variância % :=
+DIVIDE (
+    [Variância Absoluta],
+    [Receita Prevista],
+    0
+)
+
+1️⃣3️⃣ Receita YoY
+Receita YoY :=
+CALCULATE (
+    [Receita Total],
+    SAMEPERIODLASTYEAR ( Dim_Tempo[Data] )
+)
+
+1️⃣4️⃣ Receita MoM
+Receita MoM :=
+CALCULATE (
+    [Receita Total],
+    DATEADD ( Dim_Tempo[Data], -1, MONTH )
+)
+
+📊 Medidas Auxiliares (Usadas em Gráficos Avançados)
+Receita Acumulada (para Curva ABC)
+Receita Acumulada :=
+CALCULATE (
+    [Receita Total],
+    FILTER (
+        ALLSELECTED ( Dim_Produto ),
+        [Receita Total]
+            >= CALCULATE ( [Receita Total] )
+    )
+)
+
+% Acumulado (Curva ABC)
+% Receita Acumulada :=
+DIVIDE (
+    [Receita Acumulada],
+    CALCULATE ( [Receita Total], ALL ( Dim_Produto ) )
+)
+
+Classificação ABC
+Classificação ABC :=
+SWITCH (
+    TRUE (),
+    [% Receita Acumulada] <= 0.8, "A",
+    [% Receita Acumulada] <= 0.95, "B",
+    "C"
+
+
 📊 Dashboard — Estrutura das Páginas
 
 
