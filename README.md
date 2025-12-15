@@ -152,14 +152,15 @@ Comparação entre valores reais e previstos
 
 1️⃣ Resumo Executivo Financeiro
 
+<img width="581" height="794" alt="pag1" src="https://github.com/user-attachments/assets/f7fa8bf0-d6b2-44a7-9113-898fb1c2fe18" />
 
 Visão geral do negócio:
 
 KPIs financeiros
 
-Receita real vs prevista
+Receita por Região
 
-Mapa por região
+Receita real vs prevista
 
 Top clientes
 
@@ -168,18 +169,17 @@ Drivers de resultado
 
 2️⃣ Previsão Financeira (Forecast)
 
+<img width="1161" height="645" alt="pag2" src="https://github.com/user-attachments/assets/dae22ad5-f205-442a-80c3-71caefc46090" />
 
-Tendência futura de receita e custos
+Receita Total
 
-Sazonalidade
+Custo Previsto
 
-Variabilidade financeira
-
-Análise de risco
-
+Heatmap de Receita
 
 3️⃣ Análise de Custos e Despesas
 
+<img width="952" height="794" alt="pag3" src="https://github.com/user-attachments/assets/ef74213b-69fe-4631-baf8-bee2bbff1ef1" />
 
 Custos por centro de custo
 
@@ -187,11 +187,12 @@ Custos por unidade de negócio
 
 Fixos vs variáveis
 
-Margem operacional
+Tabela de Despesas
 
 
 4️⃣ Análise de Clientes
 
+<img width="949" height="796" alt="pag4" src="https://github.com/user-attachments/assets/b32f1093-551f-40d1-8c76-8036803b5b2f" />
 
 Receita por cliente
 
@@ -204,14 +205,13 @@ Churn financeiro
 
 5️⃣ Análise de Produtos
 
+<img width="1152" height="696" alt="pag5" src="https://github.com/user-attachments/assets/34ad4c67-96f4-4a86-b298-f61fa3f1d3f2" />
 
-Receita e margem por produto
+Receita por Produto
+
+Margem por produto
 
 Curva ABC
-
-Categorias
-
-Produtos mais rentáveis
 
 
 🎨 Design & Experiência do Usuário
